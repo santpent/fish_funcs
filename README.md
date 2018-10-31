@@ -40,8 +40,7 @@ rs; myfunc
 It currently accounts for vi, vim, emacs, kate, geany, notepadqq, scite, atom, sublime text. The text editor / IDE must be able to accept a line number by command line.
 
 ---
-<a name="string_split"></a>
-### string_split
+### <a name="string_split"></a>string_split
 
 A drop in replacement for fish shell's `string split`. It adds two switches:
 
