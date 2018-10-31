@@ -42,6 +42,25 @@ ip addr | grep inet | string_split -w -n 3 # show active ip addresses
 ```
 ---
 
+### <a name="string_find"></a>string_find
+
+A find command for fish shell's `string`.
+
+`-k / --keywords` returns the search result along with the search terms
+#### Usage
+
+```
+<commands> | string_find [-w] [-n <column_number>] <separator>
+```
+
+#### Examples
+```
+echo 'Lorem ipsum dolor sit amet' | string_find 'sit' # returns ' amet'
+echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' # returns ' dolor '
+echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' -k # returns 'ipsum dolor sit'
+```
+---
+
 ### <a name="funced2"></a> funced2
 
 Trying to improve Fish's built in `funced` function editor, which
@@ -78,24 +97,4 @@ It currently accounts for vi, vim, emacs, kate, geany, notepadqq, scite, atom, s
 
 ---
 
-
-### <a name="string_find"></a>string_find
-
-A find command for fish shell's `string`.
-
-`-k / --keywords` returns the search result along with the search terms
-#### Usage
-
-```
-<commands> | string_find [-w] [-n <column_number>] <separator>
-```
-
-#### Examples
-```
-echo 'Lorem ipsum dolor sit amet' | string_find 'sit' # returns ' amet'
-echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' # returns ' dolor '
-echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' -k # returns 'ipsum dolor sit'
-```
-
-	
 
