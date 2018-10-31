@@ -3,8 +3,7 @@ function string_split
 	set -l options 'n/nth=' 'm/max=' 'r/right' 'q/quiet' 'w/whitespace' 'h/help'
 	argparse -n string_split $options -- $argv
 	or return
-   
-   
+      
 	if set -q _flag_help
 		echo "usage: \$ <commands> | string_split <column_number>"
 		echo "Example:"
