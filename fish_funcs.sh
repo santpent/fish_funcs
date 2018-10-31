@@ -4,6 +4,7 @@ function string_split
 	argparse -n string_split $options -- $argv
 	or return
    
+   
 	if set -q _flag_help
 		echo "usage: \$ <commands> | string_split <column_number>"
 		echo "Example:"
