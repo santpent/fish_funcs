@@ -1,6 +1,9 @@
 
+# Fish functions
 
-### string_split
+Some functions for fish shell.
+
+## string_split
 
 A drop in replacement for fish shell's `string split`. It adds two switches:
 
@@ -9,7 +12,7 @@ A drop in replacement for fish shell's `string split`. It adds two switches:
 `-w` / `--whitespace`: reduce combined whitespace into a single space, useful for processing tabulated output.
 
 
-## usage
+### Usage
 
 ```
 <commands> | string_split [-w] [-n <column_number>] <separator>
@@ -23,7 +26,7 @@ Using `-n / --nth:`
 $ echo 'a b c d' | string_split -n 3 ' ' # returns 'c'
 $ echo 'a b c d' | string_split -n -1 ' ' # returns 'd'
 ```
-Using -w / --whitespace:
+Using `-w / --whitespace:`
 
 ```
 $ ls -l | tail -4 | string_split -w -n 8 # Show the 8th column
@@ -37,18 +40,23 @@ $ dpkg --list | grep linux-image | string_split -w -n 2 # show installed kernels
 $ ip addr | grep inet | string_split -w -n 3 # show active ip addresses
 ```
 
-### string_find
+## string_find
 
 A find command for fish shell's `string`.
 
-## usage
+`-k / --keywords` returns the search result along with the search terms
+### Usage
 
 ```
 <commands> | string_find [-w] [-n <column_number>] <separator>
 ```
 
+### Examples
+```
+echo 'Lorem ipsum dolor sit amet' | string_find 'sit' # returns ' amet'
 echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' # returns ' dolor '
 echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' -k # returns 'ipsum dolor sit'
-	
+```
 
 	
+
