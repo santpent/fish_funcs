@@ -4,7 +4,7 @@
 
 A drop in replacement for fish shell's `string split`. It adds two switches:
 
-`-n` / `--nth`: returns specific column(s) from split. This can also take advantage of fish's array slicing syntax `2..4, 2..-1` etc.
+`-n / --nth:` returns specific column(s) from split. This can also take advantage of fish's array slicing syntax `2..4, 2..-1` etc.
 
 `-w` / `--whitespace`: reduce combined whitespace into a single space, useful for processing tabulated output.
 
@@ -18,12 +18,10 @@ A drop in replacement for fish shell's `string split`. It adds two switches:
 
 ## Examples
 
-Using -n / --nth:
+Using `-n / --nth:`
 ```
-$ set -l str 'a b c d e f'
-
-$ echo $str1 | string_split -n 3 ' ' # returns 'c'
-$ echo $str1 | string_split -n -1 ' ' # returns 'f'
+$ echo 'a b c d' | string_split -n 3 ' ' # returns 'c'
+$ echo 'a b c d' | string_split -n -1 ' ' # returns 'd'
 ```
 Using -w / --whitespace:
 
