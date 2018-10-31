@@ -1,45 +1,56 @@
 
 
-function string_split
+### string_split
 
-	set -l options 'n/nth=' 'm/max=' 'r/right' 'q/quiet' 'w/whitespace' 'h/help'
-	argparse -n string_split $options -- $argv
-	or return
-   
-	if set -q _flag_help
-		echo "usage: \$ <commands> | string_split <column_number>"
-		echo "Example:"
-		echo "\$ echo 'a, b, c, d' | string_split ', ' 3 # returns c"
-		return
-	end
+A drop in replacement for fish shell's `string split`. It adds two switches:
+
+`-n` / `--nth`: returns specific column(s) from split. This can also take advantage of fish's array slicing syntax `2..4, 2..-1` etc.
+
+`-w` / `--whitespace`: reduce combined whitespace into a single space, useful for processing tabulated output.
+
+
+## usage
+
+```
+<commands> | string_split [-w] [-n <column_number>] <separator>
+```
+
+
+## Examples
+
+Using -n / --nth:
+```
+$ set -l str 'a b c d e f'
+
+$ echo $str1 | string_split -n 3 ' ' # returns 'c'
+$ echo $str1 | string_split -n -1 ' ' # returns 'f'
+```
+Using -w / --whitespace:
+
+```
+$ ls -l | tail -4 | string_split -w -n 8 # Show the 8th column
+$ ls -l | tail -4 | string_split -w -n 6..8 # Show columns 6 through 8
+$ ls -l | tail -4 | string_split -w -n 6..-1 # Show the 6th column to the end
+
+$ netstat -antp | grep '^tcp' | string_split -w -n 4 # show the 'Local Address' column from netstat
+
+$ dpkg --list | grep linux-image | string_split -w -n 2 # show installed kernels
+
+$ ip addr | grep inet | string_split -w -n 3 # show active ip addresses
+```
+
+### string_find
+
+A find command for fish shell's `string`.
+
+## usage
+
+```
+<commands> | string_find [-w] [-n <column_number>] <separator>
+```
+
+echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' # returns ' dolor '
+echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' -k # returns 'ipsum dolor sit'
 	
-	set -l separator $argv
-	set -l max_switch
+
 	
-	if set -q _flag_max
-		set max_switch --max
-	end
-	
-	cat /dev/stdin | while read -l line
-
-		if set -q _flag_whitespace
-			set line ( echo $line | string replace --all --regex '[\s]+' ' ' -- )
-			# if -w / --whitespace switch is passed, the separator is ignored and replaced with space
-			set separator ' '
-		end
-
-		if set -q _flag_nth
-			
-			if echo $line | string match -q -e $separator
-			
-				set -l split_array ( echo $line | string split $max_switch $_flag_max $_flag_right $_flag_quiet $separator --)
-				echo $split_array[$_flag_nth]
-			end
-		else
-			echo $line | string split $max_switch $_flag_max $_flag_right $_flag_quiet $separator --
-		end
-	end
-end
-
-
- 
