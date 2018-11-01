@@ -44,20 +44,28 @@ ip addr | grep inet | string_split -w -n 3 # show active ip addresses
 
 ### <a name="string_find"></a>string_find
 
-A find command for fish shell's `string`.
+A suggested find command for fish shell's `string`. Pass one substring to return the given string from that point to the end, pass two substrings to extract a portion.
 
-`-k / --keywords` returns the search result along with the search terms
 #### Usage
-
 ```
-<commands> | string_find [-w] [-n <column_number>] <separator>
+<commands> | string_find [-k] start <end>
 ```
+`-t / --terms` returns the search result along with the search terms
 
 #### Examples
 ```
-echo 'Lorem ipsum dolor sit amet' | string_find 'sit' # returns ' amet'
-echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' # returns ' dolor '
-echo 'Lorem ipsum dolor sit amet' | string_find 'ipsum' 'sit' -k # returns 'ipsum dolor sit'
+echo 'a b c d e f' | string_find 'c ' # returns 'd e f'
+echo 'a b c d e f' | string_find -t 'c ' # returns 'c d e f'
+echo 'a b c d e f' | string_find 'b ' ' e' # returns 'c d'
+echo 'a b c d e f' | string_find -t 'b ' ' e' # returns 'b c d e'
+
+netstat -antp | string_find -t '192' ' ' # Find local ips
+
+ip addr | string_find 'inet ' ' ' # show connected ips
+ip route | string_find 'default via ' ' ' # get default gateway
+
+cat /etc/fstab | grep -v '^#' | string_find 'UUID=' ' ' # show UUIDs
+	
 ```
 ---
 
