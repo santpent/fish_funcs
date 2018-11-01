@@ -43,33 +43,34 @@ end
 
 function string_find
 	
-	set -l options 'k/keywords'
+	set -l options 't/terms'
 	argparse -n string_find $options -- $argv
 	
 	set -l find_from $argv[1]
 	
-	if set -q $argv[2]
-		set -l find_to $argv[2]
+	if test -n "$argv[2]"
+		set find_to $argv[2]
 	end
 	
 	cat /dev/stdin | while read -l line
 	
 		if echo $line | string match --quiet --entire "$find_from" --
 			
-			set found (echo $line | string split $find_from --)[2]
+			set found (echo $line | string split --max 1 $find_from --)[2]
 
 			if test -n "$find_to"
-				set found (echo $found | string split $find_to --)[1]
+				set found (echo $found | string split --max 1 $find_to --)[1]
 			end
 			
-			if set -q _flag_keywords
-				echo $find_from$found$find_to
+			if set -q _flag_terms
+				echo "$find_from$found$find_to"
 			else
 				echo $found
 			end
 		end
 	end
 end
+
 
 
 function funced2 --wraps functions
