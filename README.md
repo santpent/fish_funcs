@@ -48,7 +48,7 @@ A suggested find command for fish shell's `string`. Pass one substring to return
 
 #### Usage
 ```
-<commands> | string_find [-k] start <end>
+<commands> | string_find [-t] start <end>
 ```
 `-t / --terms` returns the search result along with the search terms
 
